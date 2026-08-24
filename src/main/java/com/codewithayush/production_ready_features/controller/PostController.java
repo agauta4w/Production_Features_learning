@@ -3,7 +3,6 @@ package com.codewithayush.production_ready_features.controller;
 import com.codewithayush.production_ready_features.dtos.PostDto;
 import com.codewithayush.production_ready_features.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+
     @GetMapping
     public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
@@ -27,5 +27,10 @@ public class PostController {
     @PostMapping
     public  PostDto createNewPost(@RequestBody PostDto inputPost) {
         return postService.createNewPost(inputPost);
+    }
+
+    @PutMapping({"/{postId}"})
+    public PostDto updatePost(@PathVariable Long postId, @RequestBody PostDto inputPost) {
+        return postService.updatePost(postId, inputPost);
     }
 }

@@ -34,6 +34,8 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDto createNewPost(PostDto inputPost) {
+        // Ensure POST creates a new entity even if client provided an id
+        inputPost.setId(null);
         PostEntity postEntity = modelMapper.map(inputPost, PostEntity.class);
         return modelMapper.map(postRepository.save(postEntity), PostDto.class);
     }
@@ -43,5 +45,13 @@ public class PostServiceImpl implements PostService{
         PostEntity postEntity = postRepository
                 .findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found with id: " + postId));
         return modelMapper.map(postEntity, PostDto.class);
+    }
+
+    @Override
+    public PostDto updatePost(Long postId, PostDto inputPost) {
+        PostEntity postEntity = postRepository
+                .findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found with id: " + postId));
+        modelMapper.map(inputPost, postEntity);
+        return modelMapper.map(postRepository.save(postEntity), PostDto.class);
     }
 }
