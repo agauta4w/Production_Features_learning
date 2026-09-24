@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 @Getter
 public class ApiError {
 
-    private LocalDateTime timestamp;
+    private final LocalDateTime timeStamp;
     private String error;
     private HttpStatus status;
 
     private ApiError() {
-        this.timestamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
     public ApiError(String error, HttpStatus status) {
         this();
